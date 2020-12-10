@@ -1,0 +1,39 @@
+<button mat-button mat-dialog-close class="close-btn">
+    <mat-icon aria-label="Закрыть">close</mat-icon>
+</button>
+
+<h2 mat-dialog-title>Добавление данных об экспертах по оценке и руководителей</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="userForm">
+        <mat-form-field>
+            <mat-label>Дата регистрации</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="registeredAt">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>ФИО</mat-label>
+            <input matInput placeholder="Введите ФИО участника" formControlName="fio">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Должность</mat-label>
+            <input matInput placeholder="Введите должность участника" formControlName="position">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Почта (логин)</mat-label>
+            <input matInput placeholder="Введите почту участника" formControlName="login">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Пароль</mat-label>
+            <input matInput formControlName="pass">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Телефон, привязанный к мессенджеру</mat-label>
+            <input matInput formControlName="phone">
+        </mat-form-field>
+
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="submitForm()" [disabled]="!userForm.valid">Сохранить</button>
+</mat-dialog-actions>

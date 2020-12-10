@@ -1,0 +1,91 @@
+<div class="page-wrapper" *ngIf="userList.length; else noData">
+    <h1>Список экспертов по оценке и руководителей</h1>
+
+    <div class="filters">
+        <mat-form-field class="example-full-width">
+            <mat-label>ID</mat-label>
+            <input matInput placeholder="Введите ID" [(ngModel)]="filters.id">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>ФИО</mat-label>
+            <input matInput placeholder="Введите ФИО участника" [(ngModel)]="filters.fio">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Должность</mat-label>
+            <input matInput placeholder="Введите должность участника" [(ngModel)]="filters.position">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Почта (логин)</mat-label>
+            <input matInput placeholder="Введите почту участника" [(ngModel)]="filters.login">
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" (click)="applyFilters()">Применить фильтры</button>
+    </div>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Дата регистрации</th>
+            <th>ФИО</th>
+            <th>Должность</th>
+            <th>Почта (логин)</th>
+            <th>Пароль</th>
+            <th>Телефон, привязанный к мессенджеру</th>
+        </tr>
+        <tr *ngFor="let user of userList" [class.selected]="user.selected">
+            <td>
+                <input type="checkbox" [checked]="user.selected" (click)="selectUser(user)">
+                {{user.id}}
+            </td>
+            <td>{{user.registeredAt | unixToDate}}</td>
+            <td>{{user.fio}}</td>
+            <td>{{user.position}}</td>
+            <td><a href="mailto:{{user.login}}">{{user.login}}</a></td>
+            <td>{{user.pass}}</td>
+            <td>{{user.phone}}</td>
+        </tr>
+    </table>
+
+    <mat-grid-list cols="12">
+        <mat-grid-tile [colspan]="3">
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="6">
+            <div class="paginator">
+                <div class="pagination-btn">
+                    <button mat-button class="prev" (click)="goToPage(currentPage - 1)" *ngIf="currentPage > 1">
+                        <mat-icon aria-label="Предыдущая страница">navigate_before</mat-icon>
+                    </button>
+
+                </div>
+                <button mat-button class="page" (click)="goToPage(i + 1)"
+                    *ngFor="let page of pagesCount | times; let i = index" [class.active]="i===currentPage-1">
+                    {{i+1}}
+                </button>
+                <div class="pagination-btn">
+                    <button mat-button class="next" (click)="goToPage(currentPage + 1)"
+                        *ngIf="currentPage < pagesCount">
+
+                        <mat-icon aria-label="Предыдущая страница">navigate_next</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="3">
+            <button mat-flat-button color="primary" (click)="addUser()">Добавить пользователя</button>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
+
+<ng-template #noData>
+    <ng-container *ngIf="!loading; else loadingBlock">
+        Нет результатов
+    </ng-container>
+    <ng-template #loadingBlock>
+        <ng-container *ngIf="!error; else errorBlock">
+            <app-loader></app-loader>
+        </ng-container>
+    </ng-template>
+    <ng-template #errorBlock>
+        {{error}}
+    </ng-template>
+</ng-template>

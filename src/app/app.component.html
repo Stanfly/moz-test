@@ -1,0 +1,16 @@
+<header>
+  <button mat-button>Техподдержка</button>
+  <nav mat-tab-nav-bar mat-align-tabs="center">
+    <a mat-tab-link routerLink="/about" (click)="activeLink = '/about'" [active]="activeLink == '/about'">
+      О платформе
+    </a>
+    <a mat-tab-link routerLink="/upload" (click)="activeLink = '/upload'" [active]="activeLink == '/upload'">
+      Загрузка пользователей
+    </a>
+    <a mat-tab-link routerLink="/list" (click)="activeLink = '/list'" [active]="activeLink == '/list'">
+      Список пользователей
+    </a>
+  </nav>
+</header>
+
+<router-outlet></router-outlet>

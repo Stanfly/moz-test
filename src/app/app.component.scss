@@ -1,0 +1,19 @@
+button {
+    position: absolute;
+    margin: 0 auto;
+    display: block;
+    right: 9px;
+    top: 6px;
+    z-index: 2;
+}
+.mat-tab-nav-bar {
+    box-shadow: 0 1px 8px rgb(0 0 0 / 12%);
+    border: none;
+}
+@media (max-width: 800px) {
+    button {
+        position: relative;
+        top: 0;
+        right: 0;
+    }
+}
